@@ -1,5 +1,10 @@
 #include "tinyengine.h"
 
-tinyengine::TinyEngine::TinyEngine()
+namespace tinyengine
 {
+	TinyEngine::TinyEngine()
+	{
+
+	}
 }
+

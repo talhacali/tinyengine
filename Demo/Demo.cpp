@@ -1,7 +1,9 @@
 #include <iostream>
 #include "tinyengine.h"
 
+using namespace tinyengine;
+
 int main()
 {
-    tinyengine::TinyEngine engine;
+    TinyEngine engine;
 }

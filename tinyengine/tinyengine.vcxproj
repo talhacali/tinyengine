@@ -139,9 +139,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Input\Input.h" />
+    <ClInclude Include="Renderer\Renderer.h" />
+    <ClInclude Include="Resources\ResourceManager.h" />
+    <ClInclude Include="Resources\Shader.h" />
+    <ClInclude Include="Resources\Texture.h" />
     <ClInclude Include="tinyengine.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Input\Input.cpp" />
+    <ClCompile Include="Renderer\Renderer.cpp" />
+    <ClCompile Include="Resources\ResourceManager.cpp" />
+    <ClCompile Include="Resources\Shader.cpp" />
+    <ClCompile Include="Resources\Texture.cpp" />
     <ClCompile Include="tinyengine.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
