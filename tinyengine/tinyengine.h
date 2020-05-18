@@ -3,6 +3,8 @@
 #include "GLFW/glfw3.h"
 #include <iostream>
 
+#include "Input/Input.h"
+
 namespace tinyengine
 {
 	class TinyEngine

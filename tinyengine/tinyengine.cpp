@@ -3,6 +3,11 @@
 
 namespace tinyengine
 {
+    static std::map<InputKeys, bool> keysPressed;
+
+    void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+    void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
+
 	TinyEngine::TinyEngine() : SCREEN_WIDTH(1920),SCREEN_HEIGHT(1080),isBlendEnabled(false),isDepthTestEnabled(true),isStencilTestEnabled(false),
         blendFuncSrc(GL_SRC_ALPHA),blendFuncDst(GL_ONE_MINUS_SRC_ALPHA)
 	{
@@ -18,9 +23,9 @@ namespace tinyengine
 	void TinyEngine::Init()
 	{
         glfwInit();
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+       /* glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);*/
 
         glfwWindowHint(GLFW_RESIZABLE, false);
 
@@ -30,8 +35,10 @@ namespace tinyengine
         if (glewInit() != GLEW_OK)
             std::cout << "Error!" << std::endl;
 
-        //glfwSetKeyCallback(window, key_callback);
-        //glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+        std::cout << glGetString(GL_VERSION) << std::endl;
+                                                             
+        glfwSetKeyCallback(window, key_callback);
+        glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
         if (isBlendEnabled)
         {
@@ -67,11 +74,12 @@ namespace tinyengine
             float currentFrame = glfwGetTime();
             deltaTime = currentFrame - lastFrame;
             lastFrame = currentFrame;
+
             glfwPollEvents();
 
             // Get input
 
-            // Update
+            Update();
 
             glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
@@ -83,6 +91,29 @@ namespace tinyengine
         // delete components
 
         glfwTerminate();
+    }
+
+    void TinyEngine::Update()
+    {
+
+    }
+
+    void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
+    {
+        if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+            glfwSetWindowShouldClose(window, true);
+        if (key >= 0 && key < 1024)
+        {
+            if (action == GLFW_PRESS)
+                keysPressed[(InputKeys)key] = true;
+            else if (action == GLFW_RELEASE)
+                keysPressed[(InputKeys)key] = true;
+        }
+    }
+
+    void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+    {
+        glViewport(0, 0, width, height);
     }
 }
 
