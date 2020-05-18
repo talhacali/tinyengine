@@ -4,7 +4,7 @@
 #include <map>
 #include "../tinyengine.h"
 
-namespace
+namespace tinyengine
 {
 	enum class InputKeys
 	{
@@ -20,9 +20,8 @@ namespace
 	{
 	public:
 		static bool GetKeyPressed(InputKeys key);
+		static void SetKeyPressed(InputKeys key, bool pressed);
 	private:
 		static std::map<InputKeys, bool> keysPressed;
-
-		friend class tinyengine;
 	};
 }

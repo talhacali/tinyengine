@@ -3,8 +3,6 @@
 
 namespace tinyengine
 {
-    static std::map<InputKeys, bool> keysPressed;
-
     void framebuffer_size_callback(GLFWwindow* window, int width, int height);
     void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 
@@ -77,13 +75,12 @@ namespace tinyengine
 
             glfwPollEvents();
 
-            // Get input
-
             Update();
 
             glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
-            // Render
+            
+            Render();
 
             glfwSwapBuffers(window);
         }
@@ -93,9 +90,26 @@ namespace tinyengine
         glfwTerminate();
     }
 
+    void TinyEngine::AddGameobject(Gameobject& gameobject)
+    {
+        gameobjects.push_back(gameobject);
+    }
+
     void TinyEngine::Update()
     {
+        for (std::vector<Gameobject>::iterator itr = gameobjects.begin(); itr != gameobjects.end(); itr++)
+        {
+            (*itr).Update();
+        }
 
+    }
+
+    void TinyEngine::Render()
+    {
+        for (std::vector<Gameobject>::iterator itr = gameobjects.begin(); itr != gameobjects.end(); itr++)
+        {
+            (*itr).Render();
+        }
     }
 
     void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
@@ -105,9 +119,9 @@ namespace tinyengine
         if (key >= 0 && key < 1024)
         {
             if (action == GLFW_PRESS)
-                keysPressed[(InputKeys)key] = true;
+                Input::SetKeyPressed((InputKeys)key, true);
             else if (action == GLFW_RELEASE)
-                keysPressed[(InputKeys)key] = true;
+                Input::SetKeyPressed((InputKeys)key, false);
         }
     }
 

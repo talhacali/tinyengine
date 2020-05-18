@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Gameobject\Gameobject.h" />
     <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Renderer\Renderer.h" />
     <ClInclude Include="Resources\ResourceManager.h" />
@@ -155,6 +156,7 @@
     <ClInclude Include="tinyengine.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Gameobject\Gameobject.cpp" />
     <ClCompile Include="Input\Input.cpp" />
     <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="Resources\ResourceManager.cpp" />
