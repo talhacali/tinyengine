@@ -7,13 +7,14 @@ namespace tinyengine
     void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 
 	TinyEngine::TinyEngine() : SCREEN_WIDTH(1920),SCREEN_HEIGHT(1080),isBlendEnabled(false),isDepthTestEnabled(true),isStencilTestEnabled(false),
-        blendFuncSrc(GL_SRC_ALPHA),blendFuncDst(GL_ONE_MINUS_SRC_ALPHA)
+        blendFuncSrc(GL_SRC_ALPHA),blendFuncDst(GL_ONE_MINUS_SRC_ALPHA), window(nullptr)
 	{
 	}
 
     TinyEngine::TinyEngine(int screen_width, int screen_height,bool isBlendEnabled, bool isDepthTestEnabled, bool isStencilTestEnabled, GLenum blendFuncSrc,
         GLenum blendFuncDst) : SCREEN_WIDTH(screen_width), SCREEN_HEIGHT(screen_height), isBlendEnabled(isBlendEnabled),
-        isDepthTestEnabled(isDepthTestEnabled), isStencilTestEnabled(isStencilTestEnabled), blendFuncSrc(blendFuncSrc), blendFuncDst(blendFuncDst)
+        isDepthTestEnabled(isDepthTestEnabled), isStencilTestEnabled(isStencilTestEnabled), blendFuncSrc(blendFuncSrc), blendFuncDst(blendFuncDst),
+        window(nullptr)
     {
 
     }

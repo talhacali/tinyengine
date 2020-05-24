@@ -1,5 +1,6 @@
 #include <iostream>
 #include "tinyengine.h"
+#include "Resources/Shader.h"
 
 using namespace tinyengine;
 
@@ -16,8 +17,11 @@ int main()
     engine.Init();
     
     glm::vec3 position(1.0f), rotation(1.0f);
-    Texture texture;
-    Gameobject gameobject(position, rotation, "gameobject", (Texture&)texture, &Update);
+   
+    Shader shader("..\\tinyengine\\Shaders\\vertex_shader.glsl", "..\\tinyengine\\Shaders\\fragment_shader.glsl");
+
+    Material material;
+    Gameobject gameobject(position, rotation, "gameobject", material, &Update);
     
     engine.AddGameobject(gameobject);
     

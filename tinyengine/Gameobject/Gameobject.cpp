@@ -2,12 +2,12 @@
 
 namespace tinyengine
 {
-	Gameobject::Gameobject(glm::vec3 position, glm::vec3 rotation, std::string name, Texture& texture, void(*externalupdate)(Gameobject *gameobject))
+	Gameobject::Gameobject(glm::vec3 position, glm::vec3 rotation, std::string name, Material& material, void(*externalupdate)(Gameobject *gameobject))
 	{
 		this->position = position;
 		this->rotation = rotation;
 		this->name = name;
-		this->texture = texture;
+		this->material = material;
 		this->update = externalupdate;
 	}
 
