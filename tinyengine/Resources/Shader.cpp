@@ -38,10 +38,6 @@ namespace tinyengine
 
 	}
 
-	void tinyengine::Shader::Use()
-	{
-		glUseProgram(this->ID);
-	}
 
 	void Shader::CompileShader(const std::string& vertexString, const std::string& fragmentString)
 	{
@@ -91,6 +87,70 @@ namespace tinyengine
 		glDeleteShader(vertexShader);
 		glDeleteShader(fragmentShader);
 
+	}
+
+	void tinyengine::Shader::Use()
+	{
+		glUseProgram(this->ID);
+	}
+
+	void tinyengine::Shader::SetBool(const std::string& name, bool value) const
+	{
+		glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
+	}
+
+	void tinyengine::Shader::SetInt(const std::string& name, int value) const
+	{
+		glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
+	}
+
+	void tinyengine::Shader::SetFloat(const std::string& name, float value) const
+	{
+		glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
+	}
+
+	void tinyengine::Shader::SetVec2(const std::string& name, const glm::vec2& value) const
+	{
+		glUniform2fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]);
+	}
+
+	void tinyengine::Shader::SetVec2(const std::string& name, float x, float y) const
+	{
+		glUniform2f(glGetUniformLocation(ID, name.c_str()), x, y);
+	}
+
+	void tinyengine::Shader::SetVec3(const std::string& name, const glm::vec3& value) const
+	{
+		glUniform3fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]);
+	}
+
+	void tinyengine::Shader::SetVec3(const std::string& name, float x, float y, float z) const
+	{
+		glUniform3f(glGetUniformLocation(ID, name.c_str()), x, y, z);
+	}
+
+	void tinyengine::Shader::SetVec4(const std::string& name, const glm::vec4& value) const
+	{
+		glUniform4fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]);
+	}
+	void tinyengine::Shader::SetVec4(const std::string& name, float x, float y, float z, float w)
+	{
+		glUniform4f(glGetUniformLocation(ID, name.c_str()), x, y, z, w);
+	}
+
+	void tinyengine::Shader::SetMat2(const std::string& name, const glm::mat2& mat) const
+	{
+		glUniformMatrix2fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
+	}
+
+	void tinyengine::Shader::SetMat3(const std::string& name, const glm::mat3& mat) const
+	{
+		glUniformMatrix3fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
+	}
+
+	void tinyengine::Shader::SetMat4(const std::string& name, const glm::mat4& mat) const
+	{
+		glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
 	}
 
 

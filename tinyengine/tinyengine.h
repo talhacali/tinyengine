@@ -8,9 +8,17 @@
 
 #include "Input/Input.h"
 #include "Gameobject/Gameobject.h"
+#include "Lighting/PointLight.h"
+
+namespace Time
+{
+	extern float deltaTime;
+	extern float lastFrame;
+}
 
 namespace tinyengine
 {
+
 	class TinyEngine
 	{
 	public:
@@ -20,8 +28,9 @@ namespace tinyengine
 		void Init();
 		void MainLoop();
 		void AddGameobject(Gameobject& gameobject);
+		void AddPointLight(PointLight& pointlight);
+
 	private:
-		void GetInput();
 		void Update();
 		void Render();
 		int SCREEN_WIDTH, SCREEN_HEIGHT;
@@ -29,6 +38,7 @@ namespace tinyengine
 		GLenum blendFuncSrc, blendFuncDst;
 		GLFWwindow* window;
 		std::vector<Gameobject> gameobjects;
+		std::vector<PointLight> pointLights;
 	};
 
 }

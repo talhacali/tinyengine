@@ -1,15 +1,11 @@
-#include "PointLight.h"
+#include "Cube.h"
 
 namespace tinyengine
 {
-
-    tinyengine::PointLight::PointLight(const Shader& shader, const glm::vec3& position, const glm::vec3& ambient, const glm::vec3& diffuse, const glm::vec3& specular,
-        float constant, float linear, float quadratic, std::shared_ptr<Camera> camera):
-        shader(shader), position(position), ambient(ambient), diffuse(diffuse), specular(specular),
-        constant(constant), linear(linear), quadratic(quadratic), camera(camera)
-    {
-        VAO = 0;
-        VBO = 0;
+	tinyengine::Cube::Cube(glm::vec3 position, glm::vec3 rotation, float angle, std::string name, Material& material, float persWidth, float persHeight,
+        std::shared_ptr<Camera> camera, void(*externalupdate)(Gameobject* gameobject))
+		: Gameobject(position,rotation,angle,name,material,persWidth,persHeight,camera, (*externalupdate))
+	{
 
         float vertex[] = {
             -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
@@ -59,11 +55,15 @@ namespace tinyengine
         {
             this->vertices.push_back(vertex[i]);
         }
-    }
 
+	}
 
-	void tinyengine::PointLight::Init()
-	{
+    void Cube::Init()
+    {
+        material.shader.Use();
+        material.shader.SetInt("material.diffuse", 0);
+        material.shader.SetInt("material.specular", 1);
+
         glGenVertexArrays(1, &VAO);
         glGenBuffers(1, &VBO);
 
@@ -75,29 +75,16 @@ namespace tinyengine
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
         glEnableVertexAttribArray(0);
 
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+        glEnableVertexAttribArray(1);
+
+        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+        glEnableVertexAttribArray(2);
+
         glBindVertexArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
-	}
-
-    void PointLight::Render()
-    {
-        glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)1920.0f / (float)1080.0f, 0.1f, 100.0f);
-
-        glm::mat4 view = (*camera).GetViewMatrix();
-
-        this->shader.Use();
-        this->shader.SetMat4("projection", projection);
-
-        this->shader.SetMat4("view", view);
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, this->position);
-        model = glm::scale(model, glm::vec3(0.2f)); // a smaller cube
-        float angle = 20.0f;
-        model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-        this->shader.SetMat4("model", model);
-
-        glBindVertexArray(VAO);
-        
-        glDrawArrays(GL_TRIANGLES, 0, 36);
     }
 }
+
+
+

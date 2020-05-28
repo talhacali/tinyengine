@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include <map>
-#include "../tinyengine.h"
 
 namespace tinyengine
 {
@@ -21,6 +20,10 @@ namespace tinyengine
 	public:
 		static bool GetKeyPressed(InputKeys key);
 		static void SetKeyPressed(InputKeys key, bool pressed);
+		static float lastXPos;
+		static float lastYPos;
+		static float xPos,yPos;
+		static float xOffset, yOffset;
 	private:
 		static std::map<InputKeys, bool> keysPressed;
 	};

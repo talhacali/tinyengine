@@ -90,6 +90,7 @@
       <PreprocessorDefinitions>GLEW_STATIC;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\GLFW\include;$(SolutionDir)Dependencies\GLEW\include;$(SolutionDir)Dependencies\assimp\include;</AdditionalIncludeDirectories>
+      <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -147,6 +148,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Camera\Camera.h" />
+    <ClInclude Include="Camera\FlyCamera.h" />
+    <ClInclude Include="Gameobject\Cube.h" />
     <ClInclude Include="Gameobject\Gameobject.h" />
     <ClInclude Include="glm\common.hpp" />
     <ClInclude Include="glm\detail\compute_common.hpp" />
@@ -395,23 +399,23 @@
     <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Lighting\DirectionalLight.h" />
     <ClInclude Include="Lighting\PointLight.h" />
-    <ClInclude Include="Renderer\Renderer.h" />
     <ClInclude Include="Resources\Material.h" />
-    <ClInclude Include="Resources\ResourceManager.h" />
     <ClInclude Include="Resources\Shader.h" />
     <ClInclude Include="Resources\Texture.h" />
+    <ClInclude Include="stb\stb_image.h" />
     <ClInclude Include="tinyengine.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Camera\Camera.cpp" />
+    <ClCompile Include="Camera\FlyCamera.cpp" />
+    <ClCompile Include="Gameobject\Cube.cpp" />
     <ClCompile Include="Gameobject\Gameobject.cpp" />
     <ClCompile Include="Input\Input.cpp" />
-    <ClCompile Include="Lighting\DirectionalLight.cpp" />
     <ClCompile Include="Lighting\PointLight.cpp" />
-    <ClCompile Include="Renderer\Renderer.cpp" />
     <ClCompile Include="Resources\Material.cpp" />
-    <ClCompile Include="Resources\ResourceManager.cpp" />
     <ClCompile Include="Resources\Shader.cpp" />
     <ClCompile Include="Resources\Texture.cpp" />
+    <ClCompile Include="stb\stb_image.cpp" />
     <ClCompile Include="tinyengine.cpp" />
   </ItemGroup>
   <ItemGroup>

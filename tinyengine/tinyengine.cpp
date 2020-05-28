@@ -1,10 +1,19 @@
 #include "tinyengine.h"
 
+namespace Time
+{
+    float deltaTime = 0.0f;
+    float lastFrame = 0.0f;
+}
 
 namespace tinyengine
 {
     void framebuffer_size_callback(GLFWwindow* window, int width, int height);
     void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
+    void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+
+    float lastX = 0, lastY = 0;
+    bool isMouseFirst = true;
 
 	TinyEngine::TinyEngine() : SCREEN_WIDTH(1920),SCREEN_HEIGHT(1080),isBlendEnabled(false),isDepthTestEnabled(true),isStencilTestEnabled(false),
         blendFuncSrc(GL_SRC_ALPHA),blendFuncDst(GL_ONE_MINUS_SRC_ALPHA), window(nullptr)
@@ -22,9 +31,6 @@ namespace tinyengine
 	void TinyEngine::Init()
 	{
         glfwInit();
-       /* glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);*/
 
         glfwWindowHint(GLFW_RESIZABLE, false);
 
@@ -35,8 +41,9 @@ namespace tinyengine
             std::cout << "Error!" << std::endl;
 
         std::cout << glGetString(GL_VERSION) << std::endl;
-                                                             
+                              
         glfwSetKeyCallback(window, key_callback);
+        glfwSetCursorPosCallback(window, mouse_callback);
         glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
         if (isBlendEnabled)
@@ -50,9 +57,6 @@ namespace tinyengine
 
         if (isStencilTestEnabled)
             glEnable(GL_STENCIL_TEST);
-
-        //Init components
-
        
 	}
     void TinyEngine::MainLoop()
@@ -63,23 +67,21 @@ namespace tinyengine
             return;
         }
 
-        float deltaTime = 0.0f;
-        float lastFrame = 0.0f;
 
         while (!glfwWindowShouldClose(window))
         {
             // calculate delta time
             // --------------------
             float currentFrame = glfwGetTime();
-            deltaTime = currentFrame - lastFrame;
-            lastFrame = currentFrame;
+            Time::deltaTime = currentFrame - Time::lastFrame;
+            Time::lastFrame = currentFrame;
 
             glfwPollEvents();
 
-            Update();
+            glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT);
+            Update();
             
             Render();
 
@@ -96,6 +98,11 @@ namespace tinyengine
         gameobjects.push_back(gameobject);
     }
 
+    void TinyEngine::AddPointLight(PointLight& pointlight)
+    {
+        pointLights.push_back(pointlight);
+    }
+
     void TinyEngine::Update()
     {
         for (std::vector<Gameobject>::iterator itr = gameobjects.begin(); itr != gameobjects.end(); itr++)
@@ -107,7 +114,13 @@ namespace tinyengine
 
     void TinyEngine::Render()
     {
+        
         for (std::vector<Gameobject>::iterator itr = gameobjects.begin(); itr != gameobjects.end(); itr++)
+        {
+            (*itr).Render();
+        }
+
+        for (std::vector<PointLight>::iterator itr = pointLights.begin(); itr != pointLights.end(); itr++)
         {
             (*itr).Render();
         }
@@ -124,6 +137,30 @@ namespace tinyengine
             else if (action == GLFW_RELEASE)
                 Input::SetKeyPressed((InputKeys)key, false);
         }
+    }
+
+    void mouse_callback(GLFWwindow* window, double xpos, double ypos)
+    {
+
+        if (isMouseFirst)
+        {
+            lastX = xpos;
+            lastY = ypos;
+            isMouseFirst = false;
+        }
+        
+        Input::lastXPos = lastX;
+        Input::lastYPos = lastY;
+
+        Input::xPos = xpos;
+        Input::yPos = ypos;
+
+        Input::xOffset = xpos - lastX;
+        Input::yOffset = lastY - ypos; 
+
+        lastX = xpos;
+        lastY = ypos;
+
     }
 
     void framebuffer_size_callback(GLFWwindow* window, int width, int height)
