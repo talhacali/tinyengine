@@ -8,7 +8,7 @@ It is a simple game with a fly like camera and a couple of objects in the scene.
 
 ## Features
 - Phong lighting with directional and point light source support.
-- Material support with diffuse and specular light support.
+- Material support with diffuse and specular map support.
 - Input system with keyboard and mouse.
 - General camera and fly like camera that is derived from it.
 
